@@ -7,7 +7,7 @@ import {
   hasPreAuthQuestionnaireComplete,
   mergeIntakeDocuments,
   mergeIntakePayment,
-  mergeIntakeQuestionnaire,
+  markQuestionnaireComplete,
 } from '../lib/intakeSession';
 
 type WizardStep = 'questionnaire' | 'documents' | 'payment' | 'confirmation';
@@ -59,8 +59,8 @@ export function PreAuthIntakeWizard({ onComplete, onBack }: PreAuthIntakeWizardP
     );
   }
 
-  const handleQuestionnaireSubmit = (answers: Record<string, unknown>) => {
-    mergeIntakeQuestionnaire(answers);
+  const handleQuestionnaireSubmit = (_answers: Record<string, unknown>) => {
+    markQuestionnaireComplete();
     setStep('documents');
   };
 
@@ -264,9 +264,7 @@ export function PreAuthIntakeWizard({ onComplete, onBack }: PreAuthIntakeWizardP
               <div className="border border-gray-200 rounded-lg p-4">
                 <p className="text-xs font-semibold text-gray-500 uppercase">Questionnaire</p>
                 <p className="text-sm text-gray-900 mt-1">
-                  {fresh.questionnaireAnswers
-                    ? `${Object.keys(fresh.questionnaireAnswers).length} responses saved`
-                    : '—'}
+                  {fresh.questionnaireCompletedAt ? 'Completed (responses not stored in this browser)' : '—'}
                 </p>
               </div>
               <div className="border border-gray-200 rounded-lg p-4">

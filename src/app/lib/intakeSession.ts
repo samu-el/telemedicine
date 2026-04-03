@@ -49,8 +49,7 @@ export interface IntakeSessionPayload {
   specialty: Exclude<SpecialtyType, null>;
   anonymousIntakeToken: string;
   selectedAt: string;
-  /** Filled after pre-auth questionnaire submit; bound to account on registration. */
-  questionnaireAnswers?: Record<string, unknown>;
+  /** Set after pre-auth questionnaire submit (answers are not stored in session). */
   questionnaireCompletedAt?: string;
   /** Pre-auth documents step (optional files). */
   documentFileNames?: string[];
@@ -64,9 +63,12 @@ export function getIntakeSession(): IntakeSessionPayload | null {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as IntakeSessionPayload;
+    const parsed = JSON.parse(raw) as IntakeSessionPayload & {
+      questionnaireAnswers?: Record<string, unknown>;
+    };
     if (!parsed.treatmentId || !parsed.specialty || !parsed.anonymousIntakeToken) return null;
-    return parsed;
+    const { questionnaireAnswers: _discarded, ...rest } = parsed;
+    return rest;
   } catch {
     return null;
   }
@@ -88,13 +90,12 @@ export function getTreatmentById(id: TreatmentId): TreatmentCatalogItem | undefi
   return TREATMENT_CATALOG.find((t) => t.id === id);
 }
 
-/** Persist questionnaire answers before account creation (same browser session). */
-export function mergeIntakeQuestionnaire(answers: Record<string, unknown>): void {
+/** Mark pre-auth questionnaire step complete without persisting answers in session. */
+export function markQuestionnaireComplete(): void {
   const current = getIntakeSession();
   if (!current) return;
   const full: IntakeSessionPayload = {
     ...current,
-    questionnaireAnswers: answers,
     questionnaireCompletedAt: new Date().toISOString(),
   };
   sessionStorage.setItem(STORAGE_KEY, JSON.stringify(full));
@@ -102,7 +103,7 @@ export function mergeIntakeQuestionnaire(answers: Record<string, unknown>): void
 
 export function hasPreAuthQuestionnaireComplete(): boolean {
   const i = getIntakeSession();
-  return Boolean(i?.questionnaireCompletedAt && i.questionnaireAnswers && Object.keys(i.questionnaireAnswers).length > 0);
+  return Boolean(i?.questionnaireCompletedAt);
 }
 
 export function mergeIntakeDocuments(fileNames: string[]): void {

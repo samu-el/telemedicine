@@ -160,7 +160,7 @@ export function PatientRegistrationFlow({
 
           <p className="text-sm font-medium text-[#5B6FF8] mb-1">Step 6 of 6 · Account</p>
           <h2 className="text-2xl font-semibold text-gray-900 mb-1">Create account</h2>
-          <p className="text-sm text-gray-600 mb-4">Treatment, questionnaire, documents, and payment from this session attach to your new intake</p>
+          <p className="text-sm text-gray-600 mb-4">Treatment choice, intake progress, documents, and payment demo from this session attach to your new intake (questionnaire answers are not stored in the browser)</p>
 
           {treatment && step === 'credentials' && (
             <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-900">
@@ -438,7 +438,7 @@ export function PatientRegistrationFlow({
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">Onboarding complete</h3>
                 <p className="text-sm text-gray-600 mt-2">
-                  You can sign in to complete mandatory consents and continue your case for <strong>{treatment?.title ?? 'your treatment'}</strong>. Your questionnaire answers are already on file from this session.
+                  You can sign in to complete mandatory consents and continue your case for <strong>{treatment?.title ?? 'your treatment'}</strong>. Your treatment and intake progress from this session carry forward; complete or re-enter the questionnaire in the portal as prompted.
                 </p>
               </div>
               <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-left">

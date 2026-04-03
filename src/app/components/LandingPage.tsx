@@ -191,8 +191,8 @@ export function LandingPage({ onSelectSignIn, onContinueToIntake }: LandingPageP
               <li>
                 <strong className="text-gray-900">Is my data safe before I register?</strong>
                 <p className="mt-1 text-gray-600">
-                  Questionnaire answers are held in session storage until you complete account creation; they are then
-                  associated with your verified identity.
+                  Questionnaire responses are not kept in this browser; only treatment choice and intake progress (e.g.
+                  documents, payment demo) may be held in session storage until you register and bind your account.
                 </p>
               </li>
             </ul>

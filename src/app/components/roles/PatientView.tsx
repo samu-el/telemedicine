@@ -376,10 +376,7 @@ export function PatientView({ activeNav, user, onNavigate }: PatientViewProps) {
 
   if (activeNav === 'new-case') {
     const intakeSnap = getIntakeSession();
-    const preAuthQuestionnaireDone = Boolean(
-      intakeSnap?.questionnaireAnswers &&
-        Object.keys(intakeSnap.questionnaireAnswers as Record<string, unknown>).length > 0
-    );
+    const preAuthQuestionnaireDone = Boolean(intakeSnap?.questionnaireCompletedAt);
     const preAuthDocumentsDone = Boolean(intakeSnap?.documentsCompletedAt);
     const preAuthPaymentDone = Boolean(intakeSnap?.paymentCompletedAt);
     const preAuthFullIntakeDone =
@@ -579,16 +576,12 @@ export function PatientView({ activeNav, user, onNavigate }: PatientViewProps) {
               <ConsentAcceptanceStep
                 onAccepted={() => {
                   const snap = getIntakeSession();
-                  const hasQ =
-                    snap?.questionnaireAnswers &&
-                    Object.keys(snap.questionnaireAnswers as Record<string, unknown>).length > 0;
+                  const hasQ = Boolean(snap?.questionnaireCompletedAt);
                   const hasDocs = snap?.documentsCompletedAt;
                   const hasPay = snap?.paymentCompletedAt;
                   if (hasQ && hasDocs && hasPay) {
-                    setQuestionnaireAnswers(snap!.questionnaireAnswers as Record<string, any>);
                     setConsultationStep('confirmation');
                   } else if (hasQ) {
-                    setQuestionnaireAnswers(snap!.questionnaireAnswers as Record<string, any>);
                     setConsultationStep('documents');
                   } else {
                     setConsultationStep('questionnaire');
@@ -844,7 +837,11 @@ export function PatientView({ activeNav, user, onNavigate }: PatientViewProps) {
                   <div className="bg-white border border-gray-200 rounded-xl p-4">
                     <h4 className="font-medium text-gray-900 mb-2">Questionnaire</h4>
                     <p className="text-sm text-gray-600">
-                      {Object.keys(questionnaireAnswers).length} questions answered
+                      {Object.keys(questionnaireAnswers).length > 0
+                        ? `${Object.keys(questionnaireAnswers).length} questions answered`
+                        : preAuthQuestionnaireDone
+                          ? 'Completed during pre-signup (responses not stored in this browser)'
+                          : '—'}
                     </p>
                   </div>
 

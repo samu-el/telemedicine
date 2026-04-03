@@ -1441,7 +1441,7 @@ These are **release blockers** for production, not optional polish:
 
 ## 6. Time and Cost Estimation
 
-**Currency:** Euro (€), excluding VAT/USt unless stated.
+**Currency:** United States Dollar (USD), excluding sales tax unless stated.
 
 ### Labour budget (man-hours)
 
@@ -1449,27 +1449,23 @@ These are **release blockers** for production, not optional polish:
 | :--- | :--- |
 | **Team** | 1 Product Manager + 4 developers = **5** people |
 | **Duration** | **3** months |
-| **Billable days** | **20** days per month per person |
-| **Hours per day** | **8** h (for hour accounting) |
+| **Billable hours** | **170** h per month per person |
 
-**Total man-hours:** 5 × 3 × 20 × 8 = **2,400 h**
+**Total man-hours:** 5 × 3 × 170 = **2,550 h** (equivalently **15** person-months × 170 h)
 
-**Rate:** **€170** per person-day → €170 ÷ 8 = **€21.25 / h** (blended planning rate).
+**Rate:** **$20 / h** (blended planning rate).
 
-**Total labour cost:** 2,400 h × €21.25/h = **€51,000**
+**Total labour cost:** 2,550 h × $20/h = **$51,000 USD**
 
-**Rounded total (reporting):** **€50,000** (optional; or keep **€51,000**).
-
-**Same result via person-days:** 5 × 20 × 3 = **300** person-days × €170/day = **€51,000**.
 
 ---
 
 ### Not included in the figures above
 
-- **VAT / taxes** and accounting treatment
+- **Sales tax / taxes** and accounting treatment
 - **External** penetration testing, security audit, or specialised legal / DPIA review
 - **Gematik / TI** or other certification fees
-- **Cloud and infrastructure** (Azure, domains, etc.) — typically **€500–€1,200+ / month** in production depending on scale (see §2.7)
+- **Cloud and infrastructure** (Azure, domains, etc.) — typically **$550–$1,300+ / month** in production depending on scale (see §2.7)
 - **Third-party usage:** Stripe fees, email/SMS providers, virus-scanning costs
 - **Ongoing support** after go-live (retainer or ad-hoc)
 - **Travel**, **hardware**, **marketing**, **clinical** operations (e.g. doctors’ fees), **pharmacy** stock
